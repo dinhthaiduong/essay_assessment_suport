@@ -4,7 +4,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 import requests
 from typing import Dict, Any, List
-from dotenv import load_dotenv
 
 # --- CONFIG ---
 LT_API_KEY = st.secrets.get("LT_API_KEY")
