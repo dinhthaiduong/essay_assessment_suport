@@ -2,4 +2,3 @@ streamlit
 langchain-aws
 langchain-core
 requests
-dotenv
