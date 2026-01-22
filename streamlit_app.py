@@ -213,7 +213,7 @@ def build_assessment_prompt(topic, request, essay, check_ai, vietsub=False):
         output_structure = """
             - Task Response: (1~2 sentences)
             - Information Accuracy: (2~3 sentences. Bold **accurate**, **inaccurate**)
-            - Idea Developments: (1~2 sentences. Bold **Profound** or **Superficial**)
+            - Idea Development: (1~2 sentences. Bold **Profound** or **Superficial**)
             - Coherence: (1~2 sentences)
             - Summary: (2~3 sentences)
             - Final Evaluation: (Choose one: Poor / Average / Good / Excellent / Outstanding)"""
@@ -299,7 +299,7 @@ def main():
         section_map = {
             "Task Response": ["Task Response", "Phản hồi yêu cầu"],
             "Information Accuracy": ["Information Accuracy", "Độ chính xác thông tin"],
-            "Idea Developments": ["Idea Developments", "Phát triển ý tưởng"],
+            "Idea Development": ["Idea Development", "Phát triển ý tưởng"],
             "Coherence": ["Coherence", "Sự mạch lạc"],
             "Summary": ["Summary", "Kết luận"],
             "Final Evaluation": ["Final Evaluation", "Đánh giá tổng quan"],
@@ -344,13 +344,13 @@ def main():
         if vietsub_mode:
             show_section("Phản hồi yêu cầu", "Task Response")
             show_section("Độ chính xác thông tin", "Information Accuracy")
-            show_section("Phát triển ý tưởng", "Idea Developments")
+            show_section("Phát triển ý tưởng", "Idea Development")
             show_section("Sự mạch lạc", "Coherence")
             show_section("Kết luận", "Summary")
         else:
             show_section("Task Response", "Task Response")
             show_section("Information Accuracy", "Information Accuracy")
-            show_section("Idea Developments", "Idea Developments")
+            show_section("Idea Development", "Idea Development")
             show_section("Coherence", "Coherence")
             show_section("Summary", "Summary")
 
