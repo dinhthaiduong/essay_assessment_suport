@@ -1,4 +1,3 @@
-import os
 import streamlit as st
 from langchain_aws import ChatBedrock
 from langchain_core.prompts import ChatPromptTemplate
@@ -7,12 +6,9 @@ import requests
 from typing import Dict, Any, List
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
-
 # --- CONFIG ---
-LT_API_KEY = os.getenv("LT_API_KEY")
-LT_USERNAME = os.getenv("LT_USERNAME")
+LT_API_KEY = st.secrets.get("LT_API_KEY")
+LT_USERNAME = st.secrets.get("LT_USERNAME")
 LT_API_URL = "https://api.languagetoolplus.com/v2/check"
 
 # --- PAGE CONFIGURATION ---
@@ -162,7 +158,17 @@ def render_simple_highlight(text: str, errors: List[Dict[str, Any]]) -> str:
 # --- LLM SETUP & PROMPT ---
 def get_llm():
     try:
+        access_key = st.secrets.get("AWS_ACCESS_KEY_ID") 
+        secret_key = st.secrets.get("AWS_SECRET_ACCESS_KEY") 
+        
+        if not access_key or not secret_key:
+            st.error("AWS Credentials not found. Please check Streamlit Secrets.")
+            return None
+
         llm = ChatBedrock(
+            aws_access_key_id=access_key,  # Đã thêm dấu phẩy
+            aws_secret_access_key=secret_key,
+            region_name="us-east-1",       # THÊM DÒNG NÀY (Bắt buộc)
             provider="anthropic",
             model_id="arn:aws:bedrock:us-east-1:605134429290:inference-profile/global.anthropic.claude-sonnet-4-5-20250929-v1:0",
             temperature=0
@@ -233,9 +239,9 @@ def build_assessment_prompt(topic, request, essay, check_ai, vietsub=False):
 
 # --- MAIN ---
 def main():
-    st.markdown('<div class="main-header">📝 Essay Assessment Suport</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">📝 Essay Assessment Suport ver 0.1</div>', unsafe_allow_html=True)
 
-    # Inputs
+    # Inputss
     selected_topic = st.selectbox("Select Topic", TOPICS)
     req_options = SAMPLE_REQUESTS.get(selected_topic, []) + ["Custom Request..."]
     selected_req_option = st.selectbox("Select or Enter Request", req_options)
